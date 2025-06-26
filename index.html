@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2인용 테트리스</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>2인용 테트리스</h1>
+    <div class="game-area">
+        <!-- Player 1 -->
+        <div class="player-container">
+            <h2>Player 1</h2>
+            <div class="game-container">
+                <canvas id="tetris-board-1" width="300" height="600"></canvas>
+                <div class="game-info">
+                    <h2>점수</h2>
+                    <p id="score-1">0</p>
+                    <h2>레벨</h2>
+                    <p id="level-1">1</p>
+                    <h2>다음 블록</h2>
+                    <div id="next-block">
+                        <canvas id="next-canvas-1" width="120" height="120"></canvas>
+                    </div>
+                </div>
+            </div>
+             <div class="controls" id="controls-1"></div>
+        </div>
+
+        <!-- Player 2 -->
+        <div class="player-container">
+            <h2>Player 2</h2>
+            <div class="game-container">
+                <canvas id="tetris-board-2" width="300" height="600"></canvas>
+                <div class="game-info">
+                    <h2>점수</h2>
+                    <p id="score-2">0</p>
+                    <h2>레벨</h2>
+                    <p id="level-2">1</p>
+                    <h2>다음 블록</h2>
+                    <div id="next-block">
+                        <canvas id="next-canvas-2" width="120" height="120"></canvas>
+                    </div>
+                </div>
+            </div>
+            <div class="controls" id="controls-2"></div>
+        </div>
+    </div>
+    <div class="game-controls">
+        <div id="menu">
+            <button id="create-room-button">방 만들기</button>
+            <input type="text" id="room-code-input" placeholder="방 코드 입력">
+            <button id="join-room-button">참여하기</button>
+        </div>
+        <div id="game-lobby" style="display: none;">
+            <p id="lobby-message"></p>
+            <button id="ready-button">게임 준비</button>
+            <button id="start-button" disabled>게임 시작</button>
+        </div>
+        <p id="winner-message"></p>
+    </div>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="game.js"></script>
+</body>
+</html>

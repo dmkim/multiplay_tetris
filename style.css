@@ -1,0 +1,68 @@
+body {
+    font-family: sans-serif;
+    background-color: #f0f0f0;
+    color: #333;
+    text-align: center;
+}
+
+h1 {
+    margin-bottom: 20px;
+}
+
+.game-area {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+}
+
+.player-container {
+    border: 2px solid #ccc;
+    padding: 20px;
+    border-radius: 10px;
+    background-color: #fff;
+}
+
+.game-container {
+    display: flex;
+    gap: 20px;
+}
+
+canvas {
+    border: 2px solid #333;
+    background-color: #000;
+}
+
+.game-info {
+    text-align: left;
+}
+
+#next-block {
+    border: 2px solid #ccc;
+    background-color: #f8f8f8;
+}
+
+.game-controls {
+    margin-top: 20px;
+}
+
+#menu {
+    margin-bottom: 20px;
+}
+
+#start-button {
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+#winner-message {
+    margin-top: 20px;
+    font-size: 24px;
+    font-weight: bold;
+    color: green;
+}
+
+.controls {
+    margin-top: 10px;
+    font-style: italic;
+}
