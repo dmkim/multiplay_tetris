@@ -23,8 +23,8 @@
 ### 1. 프로젝트 클론
 
 ```bash
-git clone <repository_url>
-cd <project_directory>
+git clone git clone https://github.com/dmkim/multiplay_tetris.git
+cd multiplay_tetris
 ```
 
 ### 2. 의존성 설치
