@@ -28,7 +28,8 @@ const COLORS = [
     '#F538FF', // L
     '#FF8E0D', // J
     '#FFE138', // S
-    '#3877FF'  // Z
+    '#3877FF', // Z
+    '#777777'  // Garbage line
 ];
 
 const SHAPES = [
@@ -232,7 +233,7 @@ class Game {
     merge() {
         this.piece.shape.forEach((row, y) => {
             row.forEach((value, x) => {
-                if (value !== 0) {
+                if (value !== 0 && this.piece.y + y >= 0) {
                     this.board[this.piece.y + y][this.piece.x + x] = value;
                 }
             });
@@ -267,6 +268,21 @@ class Game {
         }
     }
 
+    addGarbageLines(count) {
+        for (let i = 0; i < count; i++) {
+            this.board.shift();
+            const hole = Math.floor(Math.random() * COLS);
+            const row = Array(COLS).fill(8);
+            row[hole] = 0;
+            this.board.push(row);
+            this.piece.y--;
+        }
+
+        // 기존에는 블록이 보드 위로 밀려나면 즉시 패배 처리했으나
+        // 일반적인 테트리스 규칙에 맞춰 최상단이 가득 찼을 때만
+        // 패배하도록 로직을 수정했습니다.
+    }
+
     clearLines() {
         let lines = 0;
         outer: for (let y = ROWS - 1; y >= 0; y--) {
@@ -285,6 +301,7 @@ class Game {
         if (lines > 0) {
             this.score += lines * 10 * lines;
             this.linesCleared += lines;
+            socket.emit('sendGarbage', lines);
             this.updateScore();
         }
     }
@@ -398,6 +415,14 @@ socket.on('gameUpdate', (data) => {
         opponentPlayer.drawBoard();
         opponentPlayer.drawPiece(opponentPlayer.piece);
         opponentPlayer.drawNextPiece();
+    }
+});
+
+socket.on('receiveGarbage', (lines) => {
+    const localPlayer = localPlayerId === 1 ? player1 : player2;
+    if (localPlayer) {
+        localPlayer.addGarbageLines(lines);
+        localPlayer.drawBoard();
     }
 });
 
