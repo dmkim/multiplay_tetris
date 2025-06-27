@@ -66,3 +66,11 @@ canvas {
     margin-top: 10px;
     font-style: italic;
 }
+
+body.participant #player1-container {
+    order: 2;
+}
+
+body.participant #player2-container {
+    order: 1;
+}
