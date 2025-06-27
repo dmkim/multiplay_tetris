@@ -275,9 +275,10 @@ class Game {
             const row = Array(COLS).fill(8);
             row[hole] = 0;
             this.board.push(row);
+            this.piece.y--;
         }
 
-        if (this.collide()) {
+        if (this.piece.y < 0) {
             this.gameOver = true;
             socket.emit('gameOver', { winner: this.playerId === 1 ? 2 : 1 });
             checkWinner();
