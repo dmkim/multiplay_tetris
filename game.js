@@ -321,6 +321,7 @@ createRoomButton.addEventListener('click', () => {
     socket.emit('createRoom', roomCode);
     localPlayerId = 1;
     isHost = true;
+    document.body.classList.remove('participant');
     lobbyMessage.innerText = `방 코드: ${roomCode} (상대방 기다리는 중...)`;
     menu.style.display = 'none';
     gameLobby.style.display = 'block';
@@ -332,6 +333,7 @@ joinRoomButton.addEventListener('click', () => {
         socket.emit('joinRoom', roomCode);
         localPlayerId = 2;
         isHost = false;
+        document.body.classList.add('participant');
         lobbyMessage.innerText = `방 코드: ${roomCode} (방장 기다리는 중...)`;
         menu.style.display = 'none';
         gameLobby.style.display = 'block';
