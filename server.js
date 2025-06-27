@@ -47,6 +47,10 @@ io.on('connection', (socket) => {
         socket.to(socket.roomCode).emit('gameOver', data);
     });
 
+    socket.on('sendGarbage', (lines) => {
+        socket.to(socket.roomCode).emit('receiveGarbage', lines);
+    });
+
     socket.on('ready', () => {
         const room = rooms[socket.roomCode];
         if (room) {

@@ -28,7 +28,8 @@ const COLORS = [
     '#F538FF', // L
     '#FF8E0D', // J
     '#FFE138', // S
-    '#3877FF'  // Z
+    '#3877FF', // Z
+    '#777777'  // Garbage line
 ];
 
 const SHAPES = [
@@ -267,6 +268,22 @@ class Game {
         }
     }
 
+    addGarbageLines(count) {
+        for (let i = 0; i < count; i++) {
+            this.board.shift();
+            const hole = Math.floor(Math.random() * COLS);
+            const row = Array(COLS).fill(8);
+            row[hole] = 0;
+            this.board.push(row);
+        }
+
+        if (this.collide()) {
+            this.gameOver = true;
+            socket.emit('gameOver', { winner: this.playerId === 1 ? 2 : 1 });
+            checkWinner();
+        }
+    }
+
     clearLines() {
         let lines = 0;
         outer: for (let y = ROWS - 1; y >= 0; y--) {
@@ -285,6 +302,7 @@ class Game {
         if (lines > 0) {
             this.score += lines * 10 * lines;
             this.linesCleared += lines;
+            socket.emit('sendGarbage', lines);
             this.updateScore();
         }
     }
@@ -398,6 +416,14 @@ socket.on('gameUpdate', (data) => {
         opponentPlayer.drawBoard();
         opponentPlayer.drawPiece(opponentPlayer.piece);
         opponentPlayer.drawNextPiece();
+    }
+});
+
+socket.on('receiveGarbage', (lines) => {
+    const localPlayer = localPlayerId === 1 ? player1 : player2;
+    if (localPlayer) {
+        localPlayer.addGarbageLines(lines);
+        localPlayer.drawBoard();
     }
 });
 
