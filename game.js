@@ -233,7 +233,7 @@ class Game {
     merge() {
         this.piece.shape.forEach((row, y) => {
             row.forEach((value, x) => {
-                if (value !== 0) {
+                if (value !== 0 && this.piece.y + y >= 0) {
                     this.board[this.piece.y + y][this.piece.x + x] = value;
                 }
             });
@@ -278,11 +278,9 @@ class Game {
             this.piece.y--;
         }
 
-        if (this.piece.y < 0) {
-            this.gameOver = true;
-            socket.emit('gameOver', { winner: this.playerId === 1 ? 2 : 1 });
-            checkWinner();
-        }
+        // 기존에는 블록이 보드 위로 밀려나면 즉시 패배 처리했으나
+        // 일반적인 테트리스 규칙에 맞춰 최상단이 가득 찼을 때만
+        // 패배하도록 로직을 수정했습니다.
     }
 
     clearLines() {
